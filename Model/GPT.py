@@ -70,5 +70,3 @@ class GPT:
         self.messages.append({"role": "assistant", "content": response.choices[0].message.content})
 
         return response.choices[0].message.content
-
-GPT().ask_and_get_answer_remember_history("what is the duration of postgraduates programs?, answer in brief")
