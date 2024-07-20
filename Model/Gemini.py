@@ -19,10 +19,14 @@ class Gemini:
         # add google_key to .env file
         load_dotenv(find_dotenv(), override=True)
         os.environ['PINECONE_API_KEY'] = 'c8519fb3-b5b7-461e-afa7-0090e4a5fa43'
-        self.vector_db = self.load_vector_db()
+        self.vec_db = self.load_vec_db()         # load pinecone database (not free because of using openai embedding model), it was better than faiss when retrieving arabic answers. so we don't have to use it now.
+        self.vector_db = self.load_vector_db()   # load faiss database (free), should download faiss_index folder
 
-    def load_vector_db(self):
+    def load_vec_db(self):
         return Pinecone.from_existing_index("gp-iti", OpenAIEmbeddings(model='text-embedding-3-small', dimensions=1536))
+
+    def load_vector_db():
+        return FAISS.load_local("faiss_index", embedding_google(), allow_dangerous_deserialization=True)
 
     def search_similar_context(self, vector_db, question, n):
         if vector_db:

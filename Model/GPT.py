@@ -18,7 +18,7 @@ class GPT:
         os.environ['PINECONE_API_KEY'] = 'c8519fb3-b5b7-461e-afa7-0090e4a5fa43'
         load_dotenv(find_dotenv(), override=True)
         self.vector_db = self.load_vector_db()
-        self.messages = []
+        self.messages = [{"role": "system", "content": "You are a helpful assistant."}]
         self.client = OpenAI()
 
     def load_vector_db(self):
@@ -47,21 +47,24 @@ class GPT:
      
     def ask_and_get_answer_remember_history(self, q, k=3):
         results = self.vector_db.similarity_search_with_score(q)
-        self.messages.append({"role": "content", "query": q})
 
         if not results or results[0][1] < 0.4:
             # llm = ChatOpenAI(model='gpt-4', temperature=1)
             # return llm.invoke(q).content
+
+            self.messages.append({"role": "content", "query": q})
             response = self.client.chat.completions.create(
-                model="gpt-4o",
+                model="gpt-4",
                 messages= self.messages
             )
     
         else:
-            llm = ChatOpenAI(model='gpt-4', temperature=0.6)
+            llm = ChatOpenAI(model='gpt-4o', temperature=0.6)
             retriever = self.vector_db.as_retriever(search_type='similarity', search_kwargs={'k': k})
             chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
-            chain.run(q)
+            result = chain.run(q)
+
+            self.messages.append({"role": "content", "query": result})
             response = self.client.chat.completions.create(
                 model="gpt-4o",
                 messages= self.messages
