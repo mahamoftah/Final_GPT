@@ -52,7 +52,7 @@ class GPT:
             # llm = ChatOpenAI(model='gpt-4', temperature=1)
             # return llm.invoke(q).content
 
-            self.messages.append({"role": "content", "query": q})
+            self.messages.append({"role": "user", "content": q})
             response = self.client.chat.completions.create(
                 model="gpt-4",
                 messages= self.messages
