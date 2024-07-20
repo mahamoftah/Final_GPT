@@ -53,12 +53,12 @@ class GPT:
             # llm = ChatOpenAI(model='gpt-4', temperature=1)
             # return llm.invoke(q).content
             response = self.client.chat.completions.create(
-                model="gpt-4o",
+                model="gpt-4",
                 messages= self.messages
             )
     
         else:
-            llm = ChatOpenAI(model='gpt-4', temperature=0.6)
+            llm = ChatOpenAI(model='gpt-4o', temperature=0.6)
             retriever = self.vector_db.as_retriever(search_type='similarity', search_kwargs={'k': k})
             chain = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
             chain.run(q)
