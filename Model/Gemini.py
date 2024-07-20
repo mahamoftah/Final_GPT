@@ -25,8 +25,11 @@ class Gemini:
     def load_vec_db(self):
         return Pinecone.from_existing_index("gp-iti", OpenAIEmbeddings(model='text-embedding-3-small', dimensions=1536))
 
-    def load_vector_db():
-        return FAISS.load_local("faiss_index", embedding_google(), allow_dangerous_deserialization=True)
+    def load_vector_db(self):
+        return FAISS.load_local("faiss_index", self.embedding_google(), allow_dangerous_deserialization=True)
+
+    def embedding_google(self):
+        return GoogleGenerativeAIEmbeddings(model='models/embedding-001', task_type="SEMANTIC_SIMILARITY")
 
     def search_similar_context(self, vector_db, question, n):
         if vector_db:
