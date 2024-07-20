@@ -1,4 +1,4 @@
-#### **File: Model -> GPT**
+## **Model -> GPT**
 
 ## **Run the Code**
  
