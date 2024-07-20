@@ -8,5 +8,5 @@
 
 ## **File**
 - Model/GPT.py
-## **Trails**
+## **Results**
 - RAG/RAG.ipynb
