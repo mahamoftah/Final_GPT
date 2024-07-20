@@ -10,6 +10,7 @@ from langchain_community.vectorstores.pinecone import Pinecone
 from langchain_openai import ChatOpenAI
 from langchain_openai import OpenAIEmbeddings
 from dotenv import load_dotenv, find_dotenv
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 
 class Gemini:
