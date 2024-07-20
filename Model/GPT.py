@@ -18,7 +18,7 @@ class GPT:
         os.environ['PINECONE_API_KEY'] = 'c8519fb3-b5b7-461e-afa7-0090e4a5fa43'
         load_dotenv(find_dotenv(), override=True)
         self.vector_db = self.load_vector_db()
-        self.messages = []
+        self.messages = [{"role": "system", "content": "You are a helpful assistant."}]
         self.client = OpenAI()
 
     def load_vector_db(self):
